@@ -11,7 +11,7 @@
 class RowParser {
 public:
 	RowModel parse(string input);
-	string parse_timestamp(string datetime);
+	time_t parse_timestamp(string datetime);
 	string parse_method(string method);
 
 };

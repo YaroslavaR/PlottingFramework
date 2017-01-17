@@ -20,6 +20,7 @@ vector<RowModel> ParsingController::parse_input() {
 		    {
 		      //cout << input << '\n';
 		      rm_vector.push_back(rp.parse(input));
+		      //cout << rm_vector[0].requestor;
 
 		    }
 

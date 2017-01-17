@@ -30,17 +30,22 @@ RowModel RowParser::parse(string input) {
 	    while(getline(data,line,' '))
 	    {
 	        result.push_back(line);
+	       // cout << result[2];
 	        //cout << line << endl;// Note: You may get a couple of blank lines
 	                                // When multiple underscores are beside each other.
 	    }
 
-	rm.timestamp = parse_timestamp(result[3]);
-	rm.http_method = parse_method(result[5]);
+
+	string method = result[5];
+	string timestamp = result[3];
+
 	rm.requestor = result[0];
+	rm.http_method = parse_method(method);
+	rm.timestamp = parse_timestamp(timestamp);
 	rm.url = result[6];
 	rm.response = result[8];
 	rm.request_duration = result[9];
-	//cout << rm.http_method << endl;
+
 	return rm;
 }
 
@@ -48,14 +53,21 @@ RowModel RowParser::parse(string input) {
 // 0 1 2 3 4 5
 //
 
-string RowParser::parse_timestamp(string datetime) {
+time_t RowParser::parse_timestamp(string datetime) {
 
 	std::tm t; //= {};
 
 	time_t rawtime;
 	struct tm * timeinfo;
+	int year;
+	int month;
+	int day;
+	int hour;
+	int minute;
+	int second;
 	//int *year;
 
+	//cout << "here";
 	string timestamp = datetime;
 	timestamp.erase (timestamp.begin());
 		istringstream ss(timestamp);
@@ -65,18 +77,46 @@ string RowParser::parse_timestamp(string datetime) {
 			cout << "Parse failed\n";
 		} else {
 			stringstream ssTp;
-			ssTp << put_time(&t, "%Y-%m-%d %H:%M:%S");
+			ssTp << put_time(&t, "%Y");
+			//ssTp << put_time(&t, "%Y-%m-%d %H:%M:%S");
 			//stringstream year;
 			//year << put_time(&t, "%Y");
+			ssTp >> year;
+			ssTp.clear();
+			ssTp << put_time(&t, "%m");
+			ssTp >> month;
+			ssTp.clear();
+			ssTp << put_time(&t, "%d");
+			ssTp >> day;
+			ssTp.clear();
+			ssTp << put_time(&t, "%H");
+			ssTp >> hour;
+			ssTp.clear();
+			ssTp << put_time(&t, "%M");
+			ssTp >> minute;
+			ssTp.clear();
+			ssTp << put_time(&t, "%S");
+			ssTp >> second;
 			timestamp = ssTp.str();
 			//year = &t.tm_year;
 
 		}
+
+		timeinfo->tm_year = year;
+		timeinfo->tm_mon = month;
+		timeinfo->tm_mday = day;
+		timeinfo->tm_hour = hour;
+		timeinfo->tm_min = minute;
+		timeinfo->tm_sec = second;
+
+		rawtime = mktime ( timeinfo );
+		//cout << year << '-' << month << '-' << day << '-' << hour << '-' << minute << '-' << second << ' ' ;
 		//cout << *year << endl;
 		//time ( &rawtime );
 		//timeinfo = localtime ( &rawtime );
 		//mktime(timeinfo);
-	return timestamp;
+		//cout << rawtime << endl;
+	return rawtime;
 }
 
 string RowParser::parse_method(string method) {

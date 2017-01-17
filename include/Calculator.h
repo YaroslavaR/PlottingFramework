@@ -17,7 +17,7 @@ using namespace std;
 class Calculator {
 	int sum;
 public:
-	map<string, string> map_time_to_request_type(vector<RowModel> rm);
+	map<time_t, string> map_time_to_request_type(vector<RowModel> rm);
 };
 
 

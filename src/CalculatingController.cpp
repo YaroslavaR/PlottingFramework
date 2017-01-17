@@ -7,8 +7,9 @@
 #include "../include/CalculatingController.h"
 #include "../include/Calculator.h"
 
-map<string,string> CalculatingController::calculate_plotting_data(vector<RowModel> rm) {
+map<time_t,string> CalculatingController::calculate_plotting_data(vector<RowModel> rm) {
 	Calculator calc;
+	//cout << 'Trying';
 	return calc.map_time_to_request_type(rm);
 }
 

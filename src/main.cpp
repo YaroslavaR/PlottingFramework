@@ -17,8 +17,10 @@ int main() {
 
 	ParsingController pc;
 	vector<RowModel> rm_vector;
+	//cout << 'here';
 	rm_vector = pc.parse_input();
 	CalculatingController cc;
+	//cout << 'here';
 	cc.calculate_plotting_data(rm_vector);
 
 

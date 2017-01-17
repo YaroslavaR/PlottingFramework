@@ -8,12 +8,13 @@
 #ifndef INCLUDE_ROWMODEL_H_
 #define INCLUDE_ROWMODEL_H_
 #include <iostream>
+#include <time.h>
 
 using namespace std;
 
 class RowModel {
 public:
-	string timestamp;
+	time_t timestamp;
 	string url;
 	string response;
 	string http_method;

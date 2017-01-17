@@ -16,7 +16,7 @@ using namespace std;
 class CalculatingController {
 public:
 	//template <typename T>
-	map<string,string> calculate_plotting_data(vector<RowModel> rm);
+	map<time_t,string> calculate_plotting_data(vector<RowModel> rm);
 
 };
 
